@@ -59,6 +59,7 @@
 
         $('#go').click(function() {
           var hashtag = $('#input-hashtag').val();
+          $('#photos').find('img').remove();
           Instagram.search(hashtag);
         });
         
