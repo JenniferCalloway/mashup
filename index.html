@@ -2,7 +2,91 @@
 <html>
   <head>
     <title>Mashup</title>
+
+    <style>
+
+    h1, h3 {
+      text-align: center;
+      font-family: 'Futura';
+    }
+
+    label {
+      font-family: 'Futura';
+      margin-left: 38%;
+    }
+
+    .space {
+      background-image: url('space.jpg');
+      height: 1080px;
+      width: auto;
+      margin-top: 30px;
+    }
+
+    .photo {
+      height: 150px;
+      width: 150px;
+      margin: 55px 67px;
+      border-radius: 50%;
+      position: relative;
+    }
+
+    .photo:nth-of-type(odd) {
+      top: 45px;
+    }
+
+
+    </style>
+
+
   </head>
   <body>
+    <h1>Instas In Space</h1>
+    <h3>Make yourself a beautiful poster of your favorite Instagram photos in space by searching for a hashtag</h3>
+    <label>Display this hashtag:</label>
+    <input type="text" id="input-hashtag">
+    <button id="go">Go!</button>
+    <div class="space">
+      <div id="photos"></div>
+    </div>
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+      
+      var Instagram = {};
+
+      (function() {
+
+        $('#go').click(function() {
+          var hashtag = $('#input-hashtag').val();
+          Instagram.search(hashtag);
+        });
+        
+
+        function search(tag) {
+          console.log(tag);
+          $.getJSON(url, toScreen);
+        }
+
+        Instagram.search = search;
+      
+
+        function toScreen(photos){
+          $.each(photos.data, function(index, photo) {
+            photo = "<img class='photo' src='"+ photo.images.low_resolution.url + "' />";
+            $('div#photos').append(photo);
+          });
+        }
+
+        function search(tag){
+          var url = "https://api.instagram.com/v1/tags/" + tag + "/media/recent?callback=?&amp;client_id=90b757bd8d5a480a8e41f920d0b6f45b"
+          $.getJSON(url, toScreen);
+        }
+
+
+      })();
+
+    </script>
+    <script type="text/javascript"></script>
   </body>
 </html>
